@@ -1,0 +1,22 @@
+from graphviz import Digraph
+
+dot = Digraph(comment='ER Diagram for Event Management System')
+
+# STUDENTS table
+dot.node('ST', 'STUDENTS\n---------------\nstudent_id (PK)\nname\nemail (UNIQUE)', shape='record')
+
+# EVENTS table
+dot.node('EV', 'EVENTS\n---------------\nevent_id (PK)\nevent_name\nevent_date\nevent_time\nevent_location\ncreated_by_id (FK)', shape='record')
+
+# EVENT_REGISTRATIONS table
+dot.node('ER', 'EVENT_REGISTRATIONS\n--------------------------\nregistration_id (PK)\nstudent_id (FK)\nevent_id (FK)\ndl_code (UNIQUE)\nstatus', shape='record')
+
+# Relationships
+dot.edge('ST', 'EV', label='creates (1:M)', fontsize='10')
+dot.edge('ST', 'ER', label='registers (1:M)', fontsize='10')
+dot.edge('EV', 'ER', label='has (1:M)', fontsize='10')
+
+# Output the diagram
+dot.render('er_diagram', format='png', cleanup=True)
+
+print("ER diagram generated as 'er_diagram.png'")
